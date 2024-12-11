@@ -1,0 +1,6 @@
+venv*
+trained*
+data/
+__pycache__/
+*.zip
+dataloader.py

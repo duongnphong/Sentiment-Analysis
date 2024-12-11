@@ -5,3 +5,9 @@
 
 
 ## Creating the Network
+
+## Pipeline
+Data -> Tensor
+
+
+Train
