@@ -14,7 +14,7 @@ def categoryFromOutput(output, all_categories):
 
 
 def _randomChoice(random_value):
-    return random_value[random.randint(0, len(l) - 1)]
+    return random_value[random.randint(0, len(random_value) - 1)]
 
 
 def randomTrainingExample(all_categories, category_lines):

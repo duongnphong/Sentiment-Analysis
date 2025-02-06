@@ -1,8 +1,10 @@
+import argparse
+
 import torch
 
 from data import lineToTensor
-from main import dataload
 from model import RNN
+from train import dataload
 
 
 def evaluate(rnn, line_tensor):
@@ -31,17 +33,27 @@ def predict(input_line, rnn, all_categories, n_predictions=3):
     return predictions
 
 
-# Load categories and model
-all_categories, _, n_letters, n_categories = dataload()  # Adjust if needed
-n_hidden = 128
-rnn = RNN(n_letters, n_hidden, n_categories)
+if __name__ == "__main__":
+    # Parse command-line arguments
+    parser = argparse.ArgumentParser(description="Predict the category of a name")
+    parser.add_argument("name", type=str, help="Input name for prediction")
+    parser.add_argument(
+        "n_predictions",
+        type=int,
+        nargs="?",
+        default=3,
+        help="Number of top predictions (default: 3)",
+    )
+    args = parser.parse_args()
 
-# Load saved model parameters
-rnn.load_state_dict(torch.load("./trained_rnn_model.pth", weights_only=True))
-rnn.eval()  # Set the model to evaluation mode
+    # Load model and categories
+    all_categories, _, n_letters, n_categories = dataload()  # Adjust if needed
+    n_hidden = 128
+    rnn = RNN(n_letters, n_hidden, n_categories)
 
-name = "Satoshi"
-n_predictions = 3
-predict(name, rnn, all_categories, n_predictions)
-# predict("Jackson")
-# predict("Satoshi")
+    # Load saved model parameters
+    rnn.load_state_dict(torch.load("./trained_rnn_model.pth", weights_only=True))
+    rnn.eval()  # Set the model to evaluation mode
+
+    # Run prediction
+    predict(args.name, rnn, all_categories, args.n_predictions)
