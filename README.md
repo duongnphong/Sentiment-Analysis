@@ -1,5 +1,5 @@
 # Sentiment-Analysis
-
+Predict country origin of a given name.
 
 ## RNN Basics
 ![Alt text](./assets/network.png)
